@@ -1,0 +1,35 @@
+cc_binary {
+	name: "android.hardware.lights-service",
+	relative_install_path: "hw",
+	init_rc: ["android.hardware.light.xml"],
+	vendor: true,
+	cflags: [
+		"-g",
+		"-O0",
+		"-Wall",
+	],
+}
+
+cc_library_shared {
+	name: "ledcustomhal.default",
+	defaults: [
+		"vendor.AOS_LED.led_custom.defaults",
+	],
+	srcs: [
+		"hal/led_custom_hal.cpp",
+	],
+	header_libs: [
+		"liblog_headers",
+		"libhardware_headers",
+	],
+	local_include_dirs: [
+		"include",
+	],
+	shared_libs: [
+		"liblog",
+		"libhardware",
+	],
+	static_libs: [
+		"libledcustomshim",
+	]
+}
