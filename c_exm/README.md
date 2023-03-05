@@ -1,0 +1,59 @@
+# 1. HIDL Code
+Location: demo/interfaces
+Create ILed.hal (HIDL code) to description HAL interface
+
+# 2. Pure Binder HAL
+Use the tool provided by AOSP is `hidl-gen` for ILed.hal to generate the necessary files of HAL. This tool will generate files to specific location. In the example, it will generate files in `interfaces/led/1.0/default`
+
+List of the generated files by `hidl-gen`:
+- Android.bp
+- Led.cpp
+- Led.h
+All of files need to be modified by the customer
+
+Using the `update-makefiles-helper.sh` from AOSP to generate Android.bp in `interfaces/led/1.0`. The Android.bp will control
+the compilation, generation of HIDL interface (demo.hardware.led@1.0) and the software package will also export some necessary middleware
+
+# 3. HAL pure binding server
+
+# 4. C++ implements HAL client - JNI
+Location: demo/jni/LedHidl_jni
+- Create LedNative.cpp to implement the HAL client in the JNI code
+
+- Create Android.bp and fill the `libhidlbase`. This lib is the dynamic library styles that the HAL client module must be connected to `demo.hardware.led@1.0`(HIDL interface)
+
+# 5. Javve relizes the user interface App
+In the app, you need to routinely call the JNI interface to indirectly control LED
+
+- Use Android studio to create a project name is LedControl and create a native interface mapping class`LedControl/app/src/main/java/com/example/lowlevel/LedNative.java`
+
+- Create the main program `LedControl/app/src/main/java/com/example/ledcontrol/MainActivity.java`
+
+- Create an app layout file `LedControl/app/src/main/res/layout/activity_main.xml`. This layout is very simple with only one button to control the Led on/off
+
+- Copy the entire `LedControl` project into `demo/jni/ledHidl_jni/app`. Refer to [android studio project embedded into Android system source code](https://blog.csdn.net/weixin_39655765/article/details/106294459)
+
+# 6. System configuration
+Some board-level project configuration and SELinux configuration are needed to run the test program normally
+
+- Add the HIDL interface, server executable program , led jni library and app to the board-level project confiuration `PRODUCT_PACKAGES` and these modules are actually compliled into the Android image. Location of configuration file is `device/linaro/hikey/hikey960/device-hikey960.mk`
+
+Using sysfs to control the led by /sys/devices/platform/leds/leds/user_led3/brightness which implemented in HAL interface.
+
+By default, only the root user has permission to access the property file so you need to set `on post-fs` to access the device properties file.
+-> Modify `device/linaro/hikey/hikey960/init.hikey960.rc` 
+
+Create `device/linaro/hikey/manifest.xml` to declare the HAL instance. Refer to [Determining supported HALs](https://source.android.google.cn/docs/core/tests/vts/hal-testability#determine-supported-hals)
+
+
+Create or modify if it existed and configure SELinux in `device/linaro/hikey/sepolicy/attributes`
+
+Create `device/linaro/hikey/sepolicy/hal_led_default.te`. A new type of domain is created hal_led_default for the purpose od identifying  the HAL server later `/vendor/bin/hw/my_demo.hardware.led@1.0-service`
+
+Modify or create `device/linaro/hikey/sepolicy/hwservice.te` file
+
+Modify or create `device/linaro/hikey/sepolicy/hwservice_contexts`
+
+Modify or create `device/linaro/hikey/sepolicy/platform_app.te`
+
+
