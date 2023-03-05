@@ -35,7 +35,7 @@ Location: demo/jni/LedHidl_jni
 
 - Create Android.bp and fill the `libhidlbase`. This lib is the dynamic library styles that the HAL client module must be connected to `demo.hardware.led@1.0`(HIDL interface)
 
-# 5. Javve relizes the user interface App
+# 5. Java realizes the user interface App
 In the app, you need to routinely call the JNI interface to indirectly control LED
 
 - Use Android studio to create a project name is LedControl and create a native interface mapping class`LedControl/app/src/main/java/com/example/lowlevel/LedNative.java`
