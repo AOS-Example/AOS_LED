@@ -12,10 +12,15 @@
 
 #include <hardware/hardware.h>
 #include "led_custom_hal.h"
-#include "dev/led_custom_shim.h"
+//#include "shim/led_custom_shim.h"
 
+//need to modify letter_led to available led in the board
 static const char THE_DEVICE[] = "sys/devices/platform/leds/leds/letter_led/brightness";
 
+/* Thís hal source code will call direct to THE_DEVICE to control led.
+ * It will not call to LED device driver because LED driver only create
+ * device file. That device driver don't have function to control led
+ */
 int led_control(int enable)
 {
 	char ctrl_str[4];
@@ -31,11 +36,11 @@ int led_control(int enable)
 
 	memset(ctrl_str, '\0', size(ctrl_str));
 	if (enable) {
-		led_increase_light();
+		//led_increase_light();
 		strcpy(ctrl_str, "255"); // max_light
 	}
 	else {
-		led_decrease_light();
+		//led_decrease_light();
 		strcpy(ctrl_str, "0"); // off_light
 	}
 

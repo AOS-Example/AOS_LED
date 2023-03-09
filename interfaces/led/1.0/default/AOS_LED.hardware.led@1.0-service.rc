@@ -1,0 +1,4 @@
+service AOS_LED.led-1-0 /vendor/bin/hw/AOS_LED.hardware.led@1.0-service
+	class hal
+	user system
+	group system

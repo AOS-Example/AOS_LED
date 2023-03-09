@@ -11,5 +11,5 @@ fi
 source $ANDROID_BUILD_TOP/system/tools/hidl/update-makefiles-helper.sh
 
 do_makefiles_update \
-	"demo.hardware:demo/interfaces" \
+	"AOS_LED.hardware:AOS_LED/interfaces" \
 	"android.hidl:system/libhidl/transport"

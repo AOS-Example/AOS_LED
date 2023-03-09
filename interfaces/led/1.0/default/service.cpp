@@ -1,11 +1,11 @@
-#define LOG_TAG "demo.hardware.led@1.0-service"
+#define LOG_TAG "AOS_LED.hardware.led@1.0-service"
 #include <log/log.h>
 #include <hidl/HidlSupport.h>
 #include <hidl/HidlTransportSupport.h>
-#include <demo/hardware/led/1.0/ILed.h>
+#include <AOS_LED/hardware/led/1.0/ILed.h>
 #include "Led.h"
 
-using demo::hardware::led::V1_0::implementation::Led;
+using AOS_LED::hardware::led::V1_0::implementation::Led;
 using android::sp;
 using android::status_t;
 
@@ -17,7 +17,7 @@ int main(int /* argc */, char* /* argv */[]) {
 	 */
 	::android::hardware::configureRpcThreadpool(1 /*thread */, true /* willJoin */);
 
-	ALOGD("Prepare for demo.hardware.led@1.0-service");
+	ALOGD("Prepare for AOS_LED.hardware.led@1.0-service");
 	sp led = new Led();
 	const status_t status = led->registerAsService();
 	if (status != ::android::OK) {
