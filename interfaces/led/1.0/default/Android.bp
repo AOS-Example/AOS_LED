@@ -1,0 +1,26 @@
+cc_binary {
+	/* This should only be -impl for passthrough hal.
+	 * In most case, to convert this to a binderized implementation, you should:
+	 * - Change '-impl' to '-service' here and make it a cc_binary intstead of a cc_library_shared
+	 * - Add a *rc file for this module.
+	 * - Delete HIDL_FETCH_I* functions.
+	 * - Call configureRpcThreadpool and registerAsService on the instance.
+	 * You may also want to append '-impl/-service' with a specific identifier like '-vendor' or '-<hardware identifier>' etc to distinguish it.
+	 */
+	name: "AOS_LED.hardware.led@1.0-service",
+	relative_install_path: "hw",
+	defaults: ["hidl_defaults"],
+	vendor: true,
+	init_rc: ["AOS_LED.hardware.led@1.0-service.rc"],
+	srcs: [
+		"Led.cpp",
+		"service.cpp",
+	],
+	shared_libs: [
+		"libhidlbase",
+		"libhidltransport",
+		"libutils",
+		"liblog",
+		"AOS_LED.hardware.led@1.0",
+	],
+}

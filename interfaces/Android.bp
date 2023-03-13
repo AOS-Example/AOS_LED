@@ -1,0 +1,4 @@
+hidl_package_root {
+	name: "AOS_LED.hardware",
+	path: "AOS_LED/interfaces",
+}

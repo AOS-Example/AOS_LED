@@ -1,0 +1,28 @@
+cc_defaults {
+	name: "AOS_LED.led_custom_hal.default",
+	relative_install_path: "hw",
+	vendor: true,
+	cflags: [
+		"-g",
+		"-O0",
+		"-Wall",
+	],
+}
+
+cc_library_shared {
+	name: "led_custom_hal_lib.default",
+	defaults: [
+		"AOS_LED.led_custom_hal.defaults",
+	],
+	srcs: [
+		"led_custom_hal.cpp",
+	],
+	header_libs: [
+		"liblog_headers",
+		"libhardware_headers",
+	],
+	shared_libs: [
+		"liblog",
+		"libhardware",
+	],
+}
