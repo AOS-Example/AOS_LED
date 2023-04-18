@@ -69,4 +69,4 @@ Modify or create `device/linaro/hikey/sepolicy/hwservice_contexts`
 
 Modify or create `device/linaro/hikey/sepolicy/platform_app.te`
 
-
+Refer: https://blog.csdn.net/weixin_39655765/article/details/100871332
