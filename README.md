@@ -56,12 +56,17 @@ Using sysfs to control the led by /sys/devices/platform/leds/leds/user_led3/brig
 By default, only the root user has permission to access the property file so you need to set `on post-fs` to access the device properties file.
 -> Modify `device/linaro/hikey/hikey960/init.hikey960.rc` 
 
-Create `device/linaro/hikey/manifest.xml` to declare the HAL instance. Refer to [Determining supported HALs](https://source.android.google.cn/docs/core/tests/vts/hal-testability#determine-supported-hals)
+Create or modify `device/fsl/imx8m/evk_8mm/manifest.xml` to declare the HAL instance. Refer to [Determining supported HALs](https://source.android.google.cn/docs/core/tests/vts/hal-testability#determine-supported-hals)
+![image](https://user-images.githubusercontent.com/52844962/233141842-025dbb51-b3e1-4881-9d66-8783d25e78e4.png)
 
 
 Create or modify if it existed and configure SELinux in `device/linaro/hikey/sepolicy/attributes`
 
 Create `device/linaro/hikey/sepolicy/hal_led_default.te`. A new type of domain is created hal_led_default for the purpose od identifying  the HAL server later `/vendor/bin/hw/my_demo.hardware.led@1.0-service`
+
+Modify `/home/letter/myir-android/myir_android9.0.0_2.3.0/android_build/device/fsl/imx8m/evk_8mm/sepolicy/file_contexts` to declare the daemon process /vendor/bin/hw/my_demo.hardware.led@1.0-serviceas the newly defined hal_led_default_exectype, so that the process belongs to hal_led_defaultthe security context.
+![image](https://user-images.githubusercontent.com/52844962/233143435-84db2286-f32d-4062-a255-3870abb06314.png)
+
 
 Modify or create `device/linaro/hikey/sepolicy/hwservice.te` file
 
